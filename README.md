@@ -21,3 +21,7 @@ uv run agent.py --user alice --thread <id>   # resume one (id is printed on exit
 ```
 
 Tell it something ("I prefer metric units"), quit, start a new thread, and it will still know.
+
+## License
+
+MIT, see [LICENSE](LICENSE).
