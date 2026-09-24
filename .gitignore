@@ -12,3 +12,8 @@ wheels/
 # Agent memory (personal data)
 memory.db
 memory.db-*
+
+# Secrets / local config
+.env
+.env.*
+!.env.example

@@ -9,9 +9,11 @@
 Both live in memory.db, so they survive restarts.
 """
 
+import os
 import uuid
 from typing import Annotated
 
+from dotenv import load_dotenv
 from langchain_ollama import ChatOllama
 from langchain_core.messages import SystemMessage
 from langchain_core.runnables import RunnableConfig
@@ -22,8 +24,11 @@ from langgraph.prebuilt import InjectedStore, ToolNode, tools_condition
 from langgraph.store.base import BaseStore
 from langgraph.store.sqlite import SqliteStore
 
-DB_PATH = "memory.db"
-MODEL = "qwen3.5:4b"  # served by the local Ollama daemon
+load_dotenv()  # settings come from .env (see .env.example)
+
+DB_PATH = os.getenv("MEMORY_DB", "memory.db")
+MODEL = os.getenv("OLLAMA_MODEL", "qwen3.5:4b")
+OLLAMA_BASE_URL = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")
 
 
 @tool
@@ -90,6 +95,7 @@ def build_graph(model, checkpointer, store):
 def make_model():
     return ChatOllama(
         model=MODEL,
+        base_url=OLLAMA_BASE_URL,
         # Thinking makes a 4B model on CPU much slower; tool calls work without it.
         reasoning=False,
         num_ctx=8192,

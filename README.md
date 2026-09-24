@@ -15,6 +15,7 @@ Requires [uv](https://docs.astral.sh/uv/) and a running [Ollama](https://ollama.
 
 ```bash
 ollama pull qwen3.5:4b
+cp .env.example .env                        # edit settings as needed
 uv run agent.py --user alice                 # new conversation
 uv run agent.py --user alice --thread <id>   # resume one (id is printed on exit)
 ```
